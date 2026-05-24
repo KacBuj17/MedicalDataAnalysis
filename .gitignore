@@ -216,3 +216,16 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# MedAnalytics HE — klucze i wygenerowane dane (poza Dockerem)
+doctor_backend/keys/*.bin
+compute_server/data/*.bin
+compute_server/data/patients_encrypted.csv
+data_generator/sample_data.csv
+
+# Node.js
+frontend/node_modules/
+frontend/build/
+
+# Claude Code
+.claude/
