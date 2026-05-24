@@ -1,0 +1,64 @@
+name: medical-he
+
+services:
+
+  # ── Serwer obliczeniowy ─────────────────────────────────────────────────────
+  # Posiada TYLKO klucz publiczny CKKS.
+  # Nie może odszyfrować żadnych danych ani wyników obliczeń.
+  compute_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: compute_server
+    image: medical-he/compute_server:latest
+    container_name: medical_compute_server
+    ports:
+      - "5002:5002"
+    networks:
+      - mednet
+    restart: unless-stopped
+
+  # ── Backend lekarza ────────────────────────────────────────────────────────
+  # Jedyny serwis posiadający klucz tajny CKKS.
+  # Szyfruje dane wejściowe i odszyfrowuje wyniki z compute_server.
+  doctor_backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: doctor_backend
+    image: medical-he/doctor_backend:latest
+    container_name: medical_doctor_backend
+    ports:
+      - "5001:5001"
+    environment:
+      - COMPUTE_SERVER_URL=http://compute_server:5002
+    depends_on:
+      compute_server:
+        condition: service_healthy
+    networks:
+      - mednet
+    restart: unless-stopped
+
+  # ── Frontend (React → nginx) ───────────────────────────────────────────────
+  # Interfejs lekarza. Przeglądarka łączy się bezpośrednio z doctor_backend
+  # na localhost:5001 (port wystawiony przez Docker na hosta).
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: frontend
+    image: medical-he/frontend:latest
+    container_name: medical_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      doctor_backend:
+        condition: service_healthy
+    networks:
+      - mednet
+    restart: unless-stopped
+
+networks:
+  mednet:
+    name: medical_he_network
+    driver: bridge
