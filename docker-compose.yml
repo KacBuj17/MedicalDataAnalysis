@@ -2,9 +2,6 @@ name: medical-he
 
 services:
 
-  # ── Serwer obliczeniowy ─────────────────────────────────────────────────────
-  # Posiada TYLKO klucz publiczny CKKS.
-  # Nie może odszyfrować żadnych danych ani wyników obliczeń.
   compute_server:
     build:
       context: .
@@ -18,9 +15,6 @@ services:
       - mednet
     restart: unless-stopped
 
-  # ── Backend lekarza ────────────────────────────────────────────────────────
-  # Jedyny serwis posiadający klucz tajny CKKS.
-  # Szyfruje dane wejściowe i odszyfrowuje wyniki z compute_server.
   doctor_backend:
     build:
       context: .
@@ -39,9 +33,6 @@ services:
       - mednet
     restart: unless-stopped
 
-  # ── Frontend (React → nginx) ───────────────────────────────────────────────
-  # Interfejs lekarza. Przeglądarka łączy się bezpośrednio z doctor_backend
-  # na localhost:5001 (port wystawiony przez Docker na hosta).
   frontend:
     build:
       context: .

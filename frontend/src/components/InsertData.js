@@ -2,17 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { patientsAPI } from '../services/api';
 
 const FIELDS = [
-  { key: 'blood_pressure_sys', label: 'Ciśnienie skurczowe',  unit: 'mmHg',   min: 70,  max: 250,   step: 1,    hint: 'norma: 90–140' },
-  { key: 'blood_pressure_dia', label: 'Ciśnienie rozkurczowe',unit: 'mmHg',   min: 40,  max: 150,   step: 1,    hint: 'norma: 60–90' },
-  { key: 'heart_rate',         label: 'Tętno',                unit: 'bpm',    min: 30,  max: 200,   step: 1,    hint: 'norma: 60–100' },
-  { key: 'glucose',            label: 'Glukoza (na czczo)',   unit: 'mg/dL',  min: 40,  max: 600,   step: 0.1,  hint: 'norma: 70–100' },
-  { key: 'cholesterol',        label: 'Cholesterol całkowity',unit: 'mg/dL',  min: 50,  max: 500,   step: 1,    hint: 'norma: <200' },
-  { key: 'bmi',                label: 'BMI',                  unit: 'kg/m²',  min: 10,  max: 70,    step: 0.1,  hint: 'norma: 18.5–25' },
-  { key: 'age',                label: 'Wiek',                 unit: 'lat',    min: 1,   max: 120,   step: 1,    hint: '' },
-  { key: 'hemoglobin',         label: 'Hemoglobina',          unit: 'g/dL',   min: 3,   max: 25,    step: 0.1,  hint: 'norma: 12–17.5' },
-  { key: 'creatinine',         label: 'Kreatynina',           unit: 'mg/dL',  min: 0.1, max: 15,    step: 0.01, hint: 'norma: 0.6–1.2' },
-  { key: 'wbc',                label: 'Leukocyty (WBC)',      unit: '/μL',    min: 500, max: 50000, step: 100,  hint: 'norma: 4000–11000' },
-  { key: 'rbc',                label: 'Erytrocyty (RBC)',     unit: 'mln/μL', min: 1,   max: 9,     step: 0.01, hint: 'norma: 4.0–5.5' },
+  { key: 'weight',              label: 'Masa ciała',       unit: 'kg',    min: 10,  max: 300,  step: 0.1, hint: 'norma: 50–90' },
+  { key: 'height',              label: 'Wzrost',           unit: 'cm',    min: 50,  max: 250,  step: 0.1, hint: 'norma: 152–193' },
+  { key: 'bmi',                 label: 'BMI',              unit: 'kg/m²', min: 5,   max: 80,   step: 0.1, hint: 'norma: 18.5–25' },
+  { key: 'waist_circumference', label: 'Obwód talii',      unit: 'cm',    min: 40,  max: 200,  step: 0.1, hint: 'norma: 60–94' },
+  { key: 'hip_circumference',   label: 'Obwód bioder',     unit: 'cm',    min: 50,  max: 200,  step: 0.1, hint: 'norma: 80–115' },
+  { key: 'upper_leg_length',    label: 'Długość uda',      unit: 'cm',    min: 10,  max: 80,   step: 0.1, hint: 'norma: 32–50' },
+  { key: 'upper_arm_length',    label: 'Długość ramienia', unit: 'cm',    min: 10,  max: 60,   step: 0.1, hint: 'norma: 30–42' },
 ];
 
 const EMPTY_MEDICAL = Object.fromEntries(FIELDS.map((f) => [f.key, '']));

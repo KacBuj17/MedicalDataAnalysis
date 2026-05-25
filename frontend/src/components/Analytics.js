@@ -7,25 +7,25 @@ import {
 import { analyzeAPI } from '../services/api';
 
 const FIELDS = [
-  { key: 'blood_pressure_sys', label: 'Ciśnienie skurczowe', unit: 'mmHg' },
-  { key: 'blood_pressure_dia', label: 'Ciśnienie rozkurczowe', unit: 'mmHg' },
-  { key: 'heart_rate',         label: 'Tętno', unit: 'bpm' },
-  { key: 'glucose',            label: 'Glukoza', unit: 'mg/dL' },
-  { key: 'cholesterol',        label: 'Cholesterol', unit: 'mg/dL' },
-  { key: 'bmi',                label: 'BMI', unit: 'kg/m²' },
-  { key: 'age',                label: 'Wiek', unit: 'lat' },
-  { key: 'hemoglobin',         label: 'Hemoglobina', unit: 'g/dL' },
-  { key: 'creatinine',         label: 'Kreatynina', unit: 'mg/dL' },
-  { key: 'wbc',                label: 'Leukocyty (WBC)', unit: '/μL' },
-  { key: 'rbc',                label: 'Erytrocyty (RBC)', unit: 'mln/μL' },
+  { key: 'weight',              label: 'Masa ciała',       unit: 'kg'    },
+  { key: 'height',              label: 'Wzrost',           unit: 'cm'    },
+  { key: 'bmi',                 label: 'BMI',              unit: 'kg/m²' },
+  { key: 'waist_circumference', label: 'Obwód talii',      unit: 'cm'    },
+  { key: 'hip_circumference',   label: 'Obwód bioder',     unit: 'cm'    },
+  { key: 'upper_leg_length',    label: 'Długość uda',      unit: 'cm'    },
+  { key: 'upper_arm_length',    label: 'Długość ramienia', unit: 'cm'    },
 ];
 
-const PROFILE_FIELDS = FIELDS.filter((f) => f.key !== 'age');
+const PROFILE_FIELDS = FIELDS;
 
 const COMPARE_DEFAULTS = {
-  blood_pressure_sys: 138, blood_pressure_dia: 88, heart_rate: 78,
-  glucose: 112, cholesterol: 215, bmi: 27.5,
-  hemoglobin: 13.8, creatinine: 1.1, wbc: 9500, rbc: 4.8,
+  weight: 75.0,
+  height: 170.0,
+  bmi: 26.0,
+  waist_circumference: 85.0,
+  hip_circumference: 100.0,
+  upper_leg_length: 40.0,
+  upper_arm_length: 36.0,
 };
 
 function severityColor(s) {
@@ -54,7 +54,7 @@ function buildHistogram(values, bins = 15) {
 
 // ── Population Statistics Panel ───────────────────────────────────────────────
 function PopulationStats() {
-  const [field, setField] = useState('glucose');
+  const [field, setField] = useState('bmi');
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -402,7 +402,7 @@ function ProfileAnalysis() {
 
 // ── Single Field Compare ──────────────────────────────────────────────────────
 function SingleCompare() {
-  const [field, setField] = useState('glucose');
+  const [field, setField] = useState('bmi');
   const [value, setValue] = useState('');
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -445,7 +445,7 @@ function SingleCompare() {
             step="any"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder={`np. ${meta?.key === 'glucose' ? '115' : '...'}`}
+            placeholder={`np. ${meta?.key === 'bmi' ? '26.0' : '...'}`}
           />
         </div>
         <button className="btn btn-primary" style={{ width: 'auto', marginBottom: '1.2rem' }} onClick={run} disabled={loading || !value}>
@@ -502,7 +502,7 @@ export default function Analytics() {
 
       <div className="section-title">Analizy statystyczne</div>
       <div className="section-sub">
-        Szyfrowanie homomorficzne BGV/CKKS/BFV — obliczenia na zaszyfrowanych danych medycznych.
+        Szyfrowanie homomorficzne CKKS — obliczenia na zaszyfrowanych danych medycznych.
       </div>
 
       <div className="inner-tabs">

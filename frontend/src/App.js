@@ -9,7 +9,6 @@ export default function App() {
   const [token,      setToken]      = useState(localStorage.getItem('token'));
   const [doctorName, setDoctorName] = useState(localStorage.getItem('doctorName') || '');
   const [activeTab,  setActiveTab]  = useState('patients');
-  // Pacjent przekazany do InsertData (tryb "dodaj badanie")
   const [insertPatient, setInsertPatient] = useState(null);
 
   useEffect(() => {

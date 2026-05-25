@@ -2,20 +2,15 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { patientsAPI } from '../services/api';
 
 const FIELD_META = {
-  age:                { label: 'Wiek',          unit: 'lat',    normal: [18, 100] },
-  blood_pressure_sys: { label: 'RR skurczowe',  unit: 'mmHg',  normal: [90, 140] },
-  blood_pressure_dia: { label: 'RR rozkurczowe',unit: 'mmHg',  normal: [60, 90]  },
-  heart_rate:         { label: 'Tętno',         unit: 'bpm',   normal: [60, 100] },
-  glucose:            { label: 'Glukoza',       unit: 'mg/dL', normal: [70, 100] },
-  cholesterol:        { label: 'Cholesterol',   unit: 'mg/dL', normal: [0, 200]  },
-  bmi:                { label: 'BMI',           unit: 'kg/m²', normal: [18.5, 25]},
-  hemoglobin:         { label: 'Hemoglobina',   unit: 'g/dL',  normal: [12, 17.5]},
-  creatinine:         { label: 'Kreatynina',    unit: 'mg/dL', normal: [0.6, 1.2]},
-  wbc:                { label: 'WBC',           unit: '/μL',   normal: [4000, 11000]},
-  rbc:                { label: 'RBC',           unit: 'mln/μL',normal: [4.0, 5.5] },
+  weight:              { label: 'Masa ciała',       unit: 'kg',    normal: [50, 90]    },
+  height:              { label: 'Wzrost',           unit: 'cm',    normal: [152, 193]  },
+  bmi:                 { label: 'BMI',              unit: 'kg/m²', normal: [18.5, 25]  },
+  waist_circumference: { label: 'Obwód talii',      unit: 'cm',    normal: [60, 94]    },
+  hip_circumference:   { label: 'Obwód bioder',     unit: 'cm',    normal: [80, 115]   },
+  upper_leg_length:    { label: 'Długość uda',      unit: 'cm',    normal: [32, 50]    },
+  upper_arm_length:    { label: 'Długość ramienia', unit: 'cm',    normal: [30, 42]    },
 };
 
-const KEY_FIELDS = ['blood_pressure_sys', 'heart_rate', 'glucose', 'bmi'];
 
 function statusClass(field, val) {
   const meta = FIELD_META[field];
